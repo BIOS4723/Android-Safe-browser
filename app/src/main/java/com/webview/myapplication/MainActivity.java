@@ -1,11 +1,12 @@
 package com.webview.myapplication;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,11 +19,23 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
-
+import androidx.core.app.NotificationCompat;
+import java.util.Arrays;
+import java.util.List;
 public class MainActivity extends Activity {
-
     private final int STORAGE_PERMISSION_CODE = 1;
     private WebView mWebView;
+
+    public void blockString() {
+        Toast.makeText(this, R.string.blocked_page, Toast.LENGTH_LONG).show();
+    }
+    public void onBackPressed () {
+        if (mWebView.canGoBack()) {
+            mWebView.goBack();
+        } else if (mWebView.canGoBack()) {
+            super.onBackPressed();
+        }
+    }
 
     private void requestStoragePermission() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
@@ -63,27 +76,23 @@ public class MainActivity extends Activity {
             request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, URLUtil.guessFileName(url, contentDisposition, mimeType));
             DownloadManager dm = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
             dm.enqueue(request);
-            Toast.makeText(getApplicationContext(), "Downloading File", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.downloading, Toast.LENGTH_LONG).show();
         });
-        mWebView.loadUrl("https://github.com/satyakami"); //Replace The Link Here
+        mWebView.loadUrl("https://ashivered.github.io/listofurls.html"); //Replace The Link Here
     }
-    private static class HelloWebViewClient extends WebViewClient
-    {
+
+    private class HelloWebViewClient extends WebViewClient {
+        List<String> whiteHosts = Arrays.asList("ashivered.github.io", "mitmachim.top", "forum.techno-tech.ovh", "forum-eer.ovh", "forum.netfree.link", "tchumim.com","www.prog.co.il", "hm-news.co.il", "www.jdn.co.il", "www.kore.co.il", "www.bahazit.co.il");
+
         @Override
-        public boolean shouldOverrideUrlLoading(final WebView view, final String url)
-        {
-            view.loadUrl(url);
-            return true;
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            String host = Uri.parse(url).getHost();
+            if (whiteHosts.contains(host)) {
+                return false;
+            } else {
+                blockString();
+                return true;
+            }
         }
     }
-
-    @Override
-    public void onBackPressed() {
-        if (mWebView.canGoBack()) {
-            mWebView.goBack();
-        } else {
-            super.onBackPressed();
-        }
-    }
-
 }

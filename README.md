@@ -1,22 +1,41 @@
-# Android-Webview-App
-A Simple To Use App That Shows Web Pages Within The App And Download Content Using Phone's Internal Downloader
+# Android-Whitelist-Browser
+Webview client with a whitelist of allowed URLs.
 
-[![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html)
-[![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=21)
-
-### Screenshot
-<img src="https://raw.githubusercontent.com/BishwasSagar/Android-Webview-App/master/screenshot_demo.png" width="416" height="720">
-
-### Demo
-
-Download here : [Demo Apk](https://github.com/BishwasSagar/Android-Webview-App/raw/master/demo.apk)
-
-# Getting Started
-
-[Download](https://github.com/BishwasSagar/Android-Webview-App/archive/refs/heads/master.zip) or clone this repository and import it into Android Studio.
-
-## Change Website URL 
-Open the ```app/src/main/java/com/webview/app/MainActivity.java``` file and replace `https://github.com/satyakami` on line **68** with your website
+## Change default URL 
+Open the ```app/src/main/java/com/webview/app/MainActivity.java``` file and replace `https://ashivered.github.io/listofurls.html` on line **81** with your website
 ```json
-mWebView.loadUrl("https://github.com/satyakami");
+mWebView.loadUrl("https://ashivered.github.io/listofurls.html");
+```
+
+
+the default URL has been loadded when you open the app.
+
+## Change URLs in the Whitelist
+Open the ```app/src/main/java/com/webview/app/MainActivity.java``` file and replace the URLs in line **85** with your URLs.
+
+## Change it to Blacklist Browser (List of disallowed URLs)
+Reverse the condition (in lines 87-95):
+```json
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            String host = Uri.parse(url).getHost();
+            if (whiteHosts.contains(host)) {
+                return false;
+            } else {
+                blockString();
+                return true;
+            }
+```
+to
+
+```json
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            String host = Uri.parse(url).getHost();
+            if (whiteHosts.contains(host)) {
+                blockString();
+                return true;
+            } else {
+                return false;
+            }
 ```
