@@ -1,5 +1,6 @@
 # Android-Whitelist-Browser
 Webview client with a whitelist of allowed URLs.
+And Download Content Using Phone's Internal Downloader.
 
 ## Change default URL 
 Open the ```app/src/main/java/com/webview/app/MainActivity.java``` file and replace `https://ashivered.github.io/listofurls.html` on line **81** with your website
