@@ -38,3 +38,5 @@ public boolean shouldOverrideUrlLoading(WebView view, String url) {
         return false;
     }
 ```
+## Example - an application based on this source code
+https://play.google.com/store/apps/details?id=aiv.ashivered.safebrowser
