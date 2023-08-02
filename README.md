@@ -1,6 +1,7 @@
-# Android-Whitelist-Browser
+# Android-Safe-browser
 A simple Webview based browser with a whitelist of allowed URLs.
 It downloads content using the Phone's internal downloader.
+[![google-play-badge.png](https://mitmachim.top/assets/uploads/files/1666811423893-google-play-badge.png)](https://play.google.com/store/apps/details?id=aiv.ashivered.book.iyarholidays) 
 
 ## Change default URL 
 Open `app/src/main/java/com/webview/app/MainActivity.java` and replace `https://ashivered.github.io/listofurls.html` on line **81** with the URL for your website
@@ -40,3 +41,4 @@ public boolean shouldOverrideUrlLoading(WebView view, String url) {
 ```
 ## Example - an application based on this source code
 https://play.google.com/store/apps/details?id=aiv.ashivered.safebrowser
+
