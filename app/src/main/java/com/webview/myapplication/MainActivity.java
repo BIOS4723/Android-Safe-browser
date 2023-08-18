@@ -59,23 +59,6 @@ public class MainActivity extends Activity { private final int STORAGE_PERMISSIO
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mWebView = findViewById(R.id.activity_main_webview);
-        WebSettings webSettings = mWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        mWebView.setWebViewClient(new HelloWebViewClient());
-        mWebView.setDownloadListener((url, userAgent, contentDisposition, mimeType, contentLength) -> {
-            Uri source = Uri.parse(url);
-            DownloadManager.Request request = new DownloadManager.Request(source);
-            String cookies = CookieManager.getInstance().getCookie(url);
-            request.addRequestHeader("cookie", cookies);
-            request.addRequestHeader("User-Agent", userAgent);
-            request.setDescription("Downloading File...");
-            request.setTitle(URLUtil.guessFileName(url, contentDisposition, mimeType));
-            request.allowScanningByMediaScanner();
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, URLUtil.guessFileName(url, contentDisposition, mimeType));
-            DownloadManager dm = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-            dm.enqueue(request);
-            Toast.makeText(this, R.string.downloading, Toast.LENGTH_LONG).show();
         });
         mWebView.loadUrl("https://ashivered.github.io/listofurls.html"); //Replace The Link Here
     }
